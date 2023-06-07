@@ -47,3 +47,10 @@ export const  Small = {
       small:true
     }
 }
+
+export const Disabled ={
+  args:{
+    label:'Disabled',
+    disabled:true
+  }
+}
