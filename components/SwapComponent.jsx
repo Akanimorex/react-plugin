@@ -6,10 +6,12 @@ import { AiFillSetting } from "react-icons/ai";
 
 
 
-export const SwapComponent = () => {
+export const SwapComponent = ({ disabled }) => {
+
+    console.log(disabled,"disald shit")
     return (
         <div className="h-screen flex items-center justify-center bg-[#F9F8FD] ">
-            <div className="bg-white w-4/6 p-5 rounded-xl ">
+            <div className="bg-white w-4/6 p-5  rounded-xl ">
                 <div className="flex justify-between">
                     <p className="font-bold">Transfer</p>
                     <div className="flex items-baseline gap-1">
@@ -23,10 +25,10 @@ export const SwapComponent = () => {
                     </div>
                 </div>
 
-                <div className="w-[100%] bg-gray-200 p-4 m-2 rounded-md">
+                <div className="w-full bg-gray-200 p-4 rounded-md mt-2 mb-2">
                     <div></div>
                     <div className="w-[100%]">
-                        <input type="number" placeholder="0.0" className="w-[80%] p-3 focus:outline-none bg-gray-200 text-xl font-bold appearance-none" />
+                        <input type="number" placeholder="0.0" className="plug-input w-[80%] p-3 focus:outline-none bg-gray-200 text-xl font-bold appearance-none" />
                         <select className="p-2 bg-gray-200 focus:outline-none">
                             <option value={"USDC"}>USDC</option>
                             <option value={"USDC"}>USDC</option>
@@ -39,8 +41,8 @@ export const SwapComponent = () => {
 
                 <div className="flex justify-center text-3xl"> <MdSwapVerticalCircle /> </div>
 
-                <div className="w-[100%] bg-gray-200 p-4 m-2">
-                    <input type="number" placeholder="0.0"  disabled="true"  spellCheck="false" className="w-[80%] p-3 focus:outline-none bg-gray-200 text-xl font-bold appearance-none" />
+                <div className="w-full bg-gray-200 p-4 mt-2 mb-2">
+                    <input type="number" placeholder="0.0"  disabled={ disabled }  spellCheck="false" className="plug-input w-[80%] p-3 focus:outline-none bg-gray-200 text-xl font-bold appearance-none" />
                     <select className="p-2 bg-gray-200 focus:outline-none">
                         <option value={"USDC"}>USDC</option>
                         <option value={"USDC"}>USDC</option>
@@ -49,6 +51,11 @@ export const SwapComponent = () => {
                         <option value={"USDC"}>USDC</option>
                     </select>
                 </div>
+
+                <div className="flex justify-center   w-full">
+                    <button className="w-full bg-[#86444f] text-white p-3">Swap</button>
+                </div>
+
             </div>
         </div>
     )
