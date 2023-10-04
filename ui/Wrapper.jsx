@@ -50,7 +50,7 @@ import {
   setActiveRoute,
 } from "../redux/features/quote/quote.slice";
 import Route from "../components/route";
-import { fetchTokenBalance, TestThis } from "../redux/features/tokenBalances/TokenBalanceSlice";
+import { fetchTokenBalance, TestThis, fetchDestinationTokenBalance } from "../redux/features/tokenBalances/TokenBalanceSlice";
 
 import { ColorRing } from "react-loader-spinner";
 
@@ -83,7 +83,7 @@ const Wrapper = () => {
   const {
     initialSourceTokenBalance,
     initialDestinationTokenBalance
-
+  
   } = useSelector((state)=>state.balances);
 
   //choose active route
@@ -200,9 +200,8 @@ const Wrapper = () => {
     }
   };
 
-  // function to fetch token balance
+  // function to fetch source token bal
 
- 
   useEffect(()=>{
     if (activeSourceChain?.chainId && activeSourceToken?.address){
       dispatch(fetchTokenBalance({
@@ -210,9 +209,19 @@ const Wrapper = () => {
         sourceChainID:activeSourceChain?.chainId,
         userAddress:connectedWalletAddress || "0x3e8cB4bd04d81498aB4b94a392c334F5328b237b"
       }));
+    };
+
+    if(activeDestinationChain?.chainId && activeDestinationToken?.address){
+      dispatch(fetchDestinationTokenBalance({
+        activeDestToken:activeDestinationToken?.address,
+        destinationChainID:activeDestinationChain?.chainId,
+        userAddress:connectedWalletAddress || "0x3e8cB4bd04d81498aB4b94a392c334F5328b237b"
+      }))
     }
   
-  },[activeSourceToken, activeSourceChain, connectedWalletAddress])
+  },[activeSourceToken, activeSourceChain,activeDestinationToken,activeDestinationChain, connectedWalletAddress]);
+
+
 
   
   
@@ -361,7 +370,7 @@ const Wrapper = () => {
                     loading={loading}
                   />
                 </div>
-                <div>Bal</div>
+                <div>Bal:{initialDestinationTokenBalance}</div>
               </section>
 
               <section className="flex items-center justify-between p-2">

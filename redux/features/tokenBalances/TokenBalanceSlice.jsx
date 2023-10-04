@@ -29,11 +29,34 @@ export const fetchTokenBalance = createAsyncThunk(
         return tokenBalanceData 
       }catch(error){
         throw Error;
-      }
-
-      
+      }  
     }
-  );
+);
+
+//destination token balance fetch
+
+export const fetchDestinationTokenBalance = createAsyncThunk(
+  'token/fetchDestTokenBalance',
+  async ( payload  ) => {
+    const apiEndpoint = `https://api.socket.tech/v2/balances/token-balance?tokenAddress=${payload.activeDestToken}&chainId=${payload.destinationChainID}&userAddress=${payload.userAddress}`;
+
+     try { const response = await fetch(apiEndpoint,{
+        headers:{
+          accept:"application/json"
+        },
+      })
+      if(!response.ok){
+        throw new Error('failed to fetch token balance')
+      }
+      const destTokenBalanceData = await response.json();
+      return destTokenBalanceData; 
+    }catch(error){
+      throw Error;
+    }  
+  }
+);
+
+
 
   //synchronous (click,dispatch immediately) use reducers
   //async (network req, etc) use extra reducers
@@ -54,6 +77,20 @@ const tokenBalanceSlice = createSlice({
         builder.addCase(fetchTokenBalance.rejected,(state, action)=>{
             state.loading = false;
             state.error = action.error.message
+        })
+
+        //destination token bal
+
+        builder.addCase(fetchDestinationTokenBalance.pending,(state)=>{
+          state.loading = true;
+        })
+        builder.addCase(fetchDestinationTokenBalance.fulfilled,(state,action)=>{
+          state.loading = false;
+          state.initialDestinationTokenBalance = action.payload?.result?.balance
+        })
+        builder.addCase(fetchDestinationTokenBalance.rejected,(state,action)=>{
+          state.loading= false;
+          state.error = action.error.message
         })
     }
 });
