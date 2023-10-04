@@ -206,8 +206,8 @@ const Wrapper = () => {
   useEffect(()=>{
     if (activeSourceChain?.chainId && activeSourceToken?.address){
       dispatch(fetchTokenBalance({
-        activeSourceToken:activeSourceToken,
-        sourceChainId:activeSourceChain?.chainId,
+        activeSourceToken:activeSourceToken?.address,
+        sourceChainID:activeSourceChain?.chainId,
         userAddress:connectedWalletAddress || "0x3e8cB4bd04d81498aB4b94a392c334F5328b237b"
       }));
     }

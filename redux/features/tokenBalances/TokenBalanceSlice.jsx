@@ -13,7 +13,7 @@ const initialState = {
 //  async thunk function.
 export const fetchTokenBalance = createAsyncThunk(
     'token/fetchTokenBalance',
-    async ( { payload } ) => {
+    async ( payload  ) => {
       const apiEndpoint = `https://api.socket.tech/v2/balances/token-balance?tokenAddress=${payload.activeSourceToken}&chainId=${payload.sourceChainID}&userAddress=${payload.userAddress}`;
   
        try { const response = await fetch(apiEndpoint,{
@@ -48,10 +48,10 @@ const tokenBalanceSlice = createSlice({
         })
         builder.addCase(fetchTokenBalance.fulfilled,(state, action)=>{
             state.loading = false;
-            state.initialSourceTokenBalance = action.payload;
+            state.initialSourceTokenBalance = action.payload?.result?.balance;
             console.log(state.initialSourceTokenBalance, "initial balance")
         })
-        builder.addCase(fetchTokenBalance.rejected,(state)=>{
+        builder.addCase(fetchTokenBalance.rejected,(state, action)=>{
             state.loading = false;
             state.error = action.error.message
         })
