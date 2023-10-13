@@ -8,7 +8,7 @@ const Route = ({
   activeDestinationToken,
   isRouteModal,
   setRouteModal,
-  selectActiveRoute
+  selectActiveRoute,
 }) => {
   // console.log(routes, "ROUTE")
   return (
@@ -24,7 +24,7 @@ const Route = ({
         <div className="route-info text-[0.8em]">
           <h2>
             {activeRoute?.userTxs[0]?.steps[0]?.protocol?.displayName}
-             {/* ~
+            {/* ~
             <span className="text-gray-400">
               {secsToMinsConverter(activeRoute?.userTxs[0]?.serviceTime)} mins
             </span> */}
@@ -88,13 +88,25 @@ const Route = ({
             </header>
 
             {routes.map((item) => {
-              {console.log(item, "ROUTE ITEM")}
+              {
+                console.log(item, "ROUTE ITEM");
+              }
               return (
-                <div className="border-[#C193FD]-2 text-white my-3 p-3 flex justify-between bg-[#1C1C28]"
-                 key={item?.routeId}
-                 onClick={ ()=> selectActiveRoute(item?.routeId) }
-                 >
-                  <span>{item?.usedBridgeNames}</span>
+                <div
+                  className="border-[#C193FD]-2 hover:border-[#fff] my-3 flex justify-between bg-[#1C1C28] p-3 text-white"
+                  key={item?.routeId}
+                  onClick={() => selectActiveRoute(item?.routeId)}
+                >
+                  <span className="flex justify-between">
+                    <img
+                      className="rounded-full"
+                      src={item?.userTxs[0]?.steps[0]?.protocol?.icon}
+                      alt="bridge logo"
+                      height="30px"
+                      width="30px"
+                    />
+                    {item?.usedBridgeNames}{" "}
+                  </span>
                   Gas Fees: ${item?.totalGasFeesInUsd.toFixed(3)}
                 </div>
               );
