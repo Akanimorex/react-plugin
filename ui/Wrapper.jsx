@@ -1,35 +1,15 @@
+
+//TO DO:
+//figure out why ENV files refuse to import
+
+
+
 import { useEffect, useState } from "react";
 
 //blockchain starts
 
-import "@rainbow-me/rainbowkit/styles.css";
-import {
-  getDefaultWallets,
-  RainbowKitProvider,
-  darkTheme,
-} from "@rainbow-me/rainbowkit";
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { mainnet, polygon, optimism, arbitrum, base, zora } from "wagmi/chains";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
+import {useAccount} from "wagmi";
 
-const { chains, publicClient } = configureChains(
-  [mainnet, polygon, optimism, arbitrum, base, zora],
-  [
-    alchemyProvider({ apiKey: "KsAEJekQaZg7rl_FzaF4ejlDqPm_GZ6I" }),
-    publicProvider(),
-  ]
-);
-const { connectors } = getDefaultWallets({
-  appName: "React plugin",
-  projectId: "c07a8b898d6fe54dc9fe9fa799a81d07",
-  chains,
-});
-const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors,
-  publicClient,
-});
 
 //blockchain ends
 
@@ -63,6 +43,9 @@ import {
 import { ColorRing } from "react-loader-spinner";
 
 const Wrapper = () => {
+
+  const abc = useAccount();
+  console.log(abc.address,"abc");
   const [connectedWalletAddress, setConnectedWalletAddress] = useState("");
   const [sourceAmount, setSourceAmount] = useState("");
   const [canAutoQuote, setCanAutoQuote] = useState(false);
@@ -312,18 +295,7 @@ const Wrapper = () => {
   // }, [canAutoQuote]);
 
   return (
-    <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider
-        modalSize="compact"
-        chains={chains}
-        theme={darkTheme({
-          accentColor: "#7b3fe4",
-          accentColorForeground: "white",
-          borderRadius: "small",
-          fontStack: "system",
-          overlayBlur: "small",
-        })}
-      >
+      <>
         {console.log(connectedWalletAddress, "wallet addy")}
         <ConnectWallet
           connectedWalletAddress={connectedWalletAddress}
@@ -424,8 +396,7 @@ const Wrapper = () => {
             )}
           </div>
         </div>
-      </RainbowKitProvider>
-    </WagmiConfig>
+      </>
   );
 };
 

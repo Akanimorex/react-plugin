@@ -12,6 +12,8 @@ const NetworkDropdown = ({
   let chainList;
   const [show, setShow] = useState(false);
 
+ 
+
   const networkRef = useRef();
   // useClickOutside(networkRef, () => setShow(false));
 
